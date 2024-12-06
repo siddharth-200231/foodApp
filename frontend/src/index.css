@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.dark-theme {
+  background-color: #0a1929;
+  color: #ffffff;
+}

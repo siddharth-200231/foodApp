@@ -1,0 +1,56 @@
+/* Core theme variables */
+:root {
+  /* Dark theme colors */
+  --dark-bg-primary: #0F172A;
+  --dark-bg-secondary: #1E293B;
+  --dark-bg-elevated: #334155;
+  --dark-text-primary: #F8FAFC;
+  --dark-text-secondary: #94A3B8;
+  --dark-text-muted: #64748B;
+  --dark-hover: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  
+  /* Primary colors */
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-muted: rgba(59, 130, 246, 0.15);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  background-color: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Override Material-UI default styles */
+.MuiPaper-root {
+  background-color: var(--dark-bg-secondary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.MuiButton-contained {
+  background: var(--gradient-primary) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.MuiButton-contained:hover {
+  filter: brightness(110%) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Add transitions */
+.MuiButton-root,
+.MuiIconButton-root,
+.MuiPaper-root {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
