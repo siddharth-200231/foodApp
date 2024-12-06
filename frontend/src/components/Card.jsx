@@ -20,7 +20,10 @@ import {
     Favorite as FavoriteIcon,
     FavoriteBorder as FavoriteBorderIcon,
     LocalShipping as ShippingIcon,
-    LocalShipping as LocalShippingIcon
+    Timer as TimerIcon,
+    LocalOffer as OfferIcon,
+    Restaurant as RestaurantIcon,
+    LocalFireDepartment as HotIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -74,6 +77,25 @@ const Card = ({ product }) => {
                     }
                 }}
             >
+                {/* Offer Badge */}
+                {product.discount > 0 && (
+                    <Chip 
+                        icon={<OfferIcon sx={{ fontSize: 16 }} />}
+                        label={`${product.discount}% OFF`} 
+                        size="small" 
+                        sx={{ 
+                            position: 'absolute',
+                            top: 12,
+                            left: 12,
+                            background: 'linear-gradient(45deg, #00c853, #69f0ae)',
+                            color: 'white',
+                            fontWeight: 600,
+                            borderRadius: 2,
+                            zIndex: 2
+                        }}
+                    />
+                )}
+
                 {/* Favorite Button with Ripple Effect */}
                 <IconButton 
                     sx={{ 
@@ -132,124 +154,81 @@ const Card = ({ product }) => {
                 </Box>
 
                 <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                    {/* Tags Section */}
-                    <Box sx={{ mb: 2, display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                        {product.category && (
-                            <Chip 
-                                label={product.category} 
-                                size="small" 
-                                sx={{ 
-                                    borderRadius: 2,
-                                    background: 'linear-gradient(45deg, #2196f3, #21cbf3)',
-                                    color: 'white',
-                                    fontWeight: 600,
-                                    textTransform: 'uppercase',
-                                    fontSize: '0.7rem',
-                                    letterSpacing: '0.5px'
-                                }}
-                            />
-                        )}
-                        {product.brand && (
-                            <Chip 
-                                label={product.brand} 
-                                size="small" 
-                                sx={{ 
-                                    borderRadius: 2,
-                                    background: 'linear-gradient(45deg, #ff9800, #ff5722)',
-                                    color: 'white',
-                                    fontWeight: 600,
-                                    textTransform: 'uppercase',
-                                    fontSize: '0.7rem',
-                                    letterSpacing: '0.5px'
-                                }}
-                            />
-                        )}
-                        {product.freeShipping && (
-                            <Chip 
-                                icon={<ShippingIcon sx={{ fontSize: 16, color: 'white' }} />}
-                                label="Free Shipping" 
-                                size="small"
-                                sx={{ 
-                                    borderRadius: 2,
-                                    background: 'linear-gradient(45deg, #4caf50, #8bc34a)',
-                                    color: 'white',
-                                    fontWeight: 600,
-                                    fontSize: '0.7rem'
-                                }}
-                            />
-                        )}
-                    </Box>
-
-                    {/* Product Name */}
+                    {/* Restaurant Name */}
                     <Typography 
-                        variant="h6" 
+                        variant="subtitle2" 
                         sx={{ 
-                            fontWeight: 700,
-                            fontSize: '1.1rem',
-                            lineHeight: 1.4,
-                            mb: 1,
-                            height: '3.2em',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            color: '#2c3e50'
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
+                            color: '#666',
+                            mb: 1
                         }}
                     >
-                        {product.name}
+                        <RestaurantIcon sx={{ fontSize: 16 }} />
+                        {product.restaurant || 'Restaurant Name'}
                     </Typography>
 
-                    {/* Rating */}
-                    {product.rating && (
-                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                            <Rating 
-                                value={product.rating} 
-                                readOnly 
-                                size="small" 
-                                precision={0.5}
-                                sx={{
-                                    '& .MuiRating-iconFilled': {
-                                        color: '#ffd700'
-                                    }
+                    {/* Product Name with Spicy Indicator */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 700, color: '#2c3e50' }}>
+                            {product.name}
+                        </Typography>
+                        {product.isSpicy && <HotIcon sx={{ color: '#ff5252' }} />}
+                    </Box>
+
+                    {/* Tags */}
+                    <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+                        {product.tags?.map(tag => (
+                            <Chip
+                                key={tag}
+                                label={tag}
+                                size="small"
+                                sx={{ 
+                                    backgroundColor: 'rgba(0,0,0,0.05)',
+                                    fontSize: '0.75rem'
                                 }}
                             />
-                            <Typography 
-                                variant="body2" 
-                                sx={{ 
-                                    ml: 1,
-                                    color: '#666',
-                                    fontSize: '0.875rem'
-                                }}
-                            >
-                                ({product.rating})
+                        ))}
+                    </Box>
+
+                    {/* Delivery Info */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <TimerIcon sx={{ fontSize: 18, color: '#666' }} />
+                            <Typography variant="body2" color="text.secondary">
+                                {product.deliveryTime || '30-40 min'}
                             </Typography>
                         </Box>
-                    )}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <ShippingIcon sx={{ fontSize: 18, color: '#666' }} />
+                            <Typography variant="body2" color="text.secondary">
+                                ₹{product.deliveryFee || 'Free'}
+                            </Typography>
+                        </Box>
+                    </Box>
 
-                    {/* Price */}
-                    <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {/* Rating and Price */}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Rating 
+                                value={product.rating || 4.5} 
+                                precision={0.5} 
+                                size="small" 
+                                readOnly 
+                            />
+                            <Typography variant="body2" color="text.secondary">
+                                ({product.ratingCount || '100+'})
+                            </Typography>
+                        </Box>
                         <Typography 
                             variant="h6" 
-                            color="primary"
                             sx={{ 
                                 fontWeight: 700,
-                                fontSize: '1.25rem'
+                                color: '#2c3e50'
                             }}
                         >
                             ₹{formatPrice(product.price)}
-                        </Typography>
-                        <Typography 
-                            variant="body2" 
-                            color="text.secondary"
-                            sx={{ 
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 0.5
-                            }}
-                        >
-                            <LocalShippingIcon sx={{ fontSize: 16 }} />
-                            Free Delivery
                         </Typography>
                     </Box>
                 </CardContent>
@@ -262,12 +241,12 @@ const Card = ({ product }) => {
                         sx={{
                             flex: 1,
                             borderRadius: 2,
-                            borderColor: '#2196f3',
-                            color: '#2196f3',
+                            borderColor: '#ff7043',
+                            color: '#ff7043',
                             fontWeight: 600,
                             '&:hover': {
-                                borderColor: '#1976d2',
-                                backgroundColor: 'rgba(33, 150, 243, 0.08)'
+                                borderColor: '#e64a19',
+                                backgroundColor: 'rgba(255, 112, 67, 0.08)'
                             }
                         }}
                     >
@@ -284,14 +263,14 @@ const Card = ({ product }) => {
                             borderRadius: 2,
                             fontWeight: 600,
                             background: product.available 
-                                ? 'linear-gradient(45deg, #2196f3, #1976d2)'
+                                ? 'linear-gradient(45deg, #ff7043, #e64a19)'
                                 : '#9e9e9e',
-                            boxShadow: '0 2px 8px rgba(33, 150, 243, 0.3)',
+                            boxShadow: '0 2px 8px rgba(255, 112, 67, 0.3)',
                             '&:hover': {
                                 background: product.available 
-                                    ? 'linear-gradient(45deg, #1976d2, #1565c0)'
+                                    ? 'linear-gradient(45deg, #e64a19, #d84315)'
                                     : '#757575',
-                                boxShadow: '0 4px 12px rgba(33, 150, 243, 0.4)'
+                                boxShadow: '0 4px 12px rgba(255, 112, 67, 0.4)'
                             }
                         }}
                     >

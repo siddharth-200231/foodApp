@@ -152,13 +152,13 @@ const CategoryMenu = ({ onSelectCategory }) => {
         endIcon={<KeyboardArrowDown />}
         disabled={loading}
         sx={{
-          color: 'var(--primary-color)',
+          color: '#FC8019',
           textTransform: 'none',
           fontSize: '1rem',
           fontWeight: 'bold',
           '&:hover': {
-            color: 'var(--primary-dark)',
-            backgroundColor: 'var(--dark-hover)',
+            color: '#e67216',
+            backgroundColor: 'rgba(252, 128, 25, 0.1)',
             transform: 'scale(1.05)',
           }
         }}
@@ -429,7 +429,7 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
             <ShoppingBag 
               sx={{ 
                 fontSize: { sm: '1.8rem', md: '2.2rem' },
-                color: '#FF6B6B',
+                color: '#FC8019',
                 animation: 'bounce 2s infinite',
                 '@keyframes bounce': {
                   '0%, 100%': {
@@ -449,7 +449,7 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
               sx={{
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 800,
-                background: 'linear-gradient(45deg, #FF6B6B, #4ECDC4)',
+                background: 'linear-gradient(45deg, #FC8019, #FF9A4D)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -464,7 +464,7 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
                   left: 0,
                   width: '100%',
                   height: '2px',
-                  background: 'linear-gradient(45deg, #FF6B6B, #4ECDC4)',
+                  background: 'linear-gradient(45deg, #FC8019, #FF9A4D)',
                   transform: 'scaleX(0)',
                   transition: 'transform 0.3s ease',
                   transformOrigin: 'right',
@@ -479,7 +479,7 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
                 transition: 'transform 0.3s ease',
               }}
             >
-              TechBazaar
+              Xwiggy
             </Typography>
           </Box>
 
@@ -490,7 +490,7 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
             mx: { sm: 4, md: 8 },
             display: { xs: 'none', sm: 'block' },
             '&:hover': {
-              boxShadow: '0 0 15px var(--primary-muted)',
+              boxShadow: '0 0 15px rgba(252, 128, 25, 0.3)',
             }
           }}>
             <Search>
