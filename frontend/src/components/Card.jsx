@@ -59,42 +59,39 @@ const Card = ({ product }) => {
         }
     };
 
+    const [isHovered, setIsHovered] = React.useState(false);
+
     return (
-        <Fade in={true} timeout={500}>
+        <Fade in={true} timeout={700}>
             <MuiCard 
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
                 sx={{ 
                     height: '100%', 
                     display: 'flex', 
                     flexDirection: 'column',
                     position: 'relative',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    borderRadius: '20px',
+                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    borderRadius: '24px',
                     overflow: 'hidden',
-                    '&::before': {
-                        content: '""',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background: 'linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-                        opacity: 0,
-                        transition: 'opacity 0.3s ease',
-                    },
+                    background: theme => theme.palette.mode === 'dark' 
+                        ? 'linear-gradient(145deg, #1e1e1e 0%, #2a2a2a 100%)'
+                        : 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                    boxShadow: theme => theme.palette.mode === 'dark'
+                        ? '0 10px 40px -10px rgba(0,0,0,0.5)'
+                        : '0 10px 40px -10px rgba(0,0,0,0.1)',
                     '&:hover': {
-                        transform: 'translateY(-8px) scale(1.02)',
-                        boxShadow: '0 20px 30px rgba(0, 0, 0, 0.15)',
-                        '&::before': {
-                            opacity: 1,
-                        },
+                        transform: 'translateY(-12px)',
+                        boxShadow: theme => theme.palette.mode === 'dark'
+                            ? '0 25px 50px -12px rgba(0,0,0,0.7)'
+                            : '0 25px 50px -12px rgba(0,0,0,0.15)',
                         '& .card-media': {
-                            transform: 'scale(1.08)',
-                        },
+                            transform: 'scale(1.1)',
+                        }
                     }
                 }}
             >
-                {/* Restaurant Image */}
-                <Box sx={{ position: 'relative', pt: '56.25%' }}> {/* 16:9 aspect ratio */}
+                <Box sx={{ position: 'relative', pt: '75%' }}>
                     {!imageLoaded && (
                         <Box
                             sx={{
@@ -129,8 +126,9 @@ const Card = ({ product }) => {
                             width: '100%',
                             height: '100%',
                             objectFit: 'cover',
-                            transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                            filter: 'brightness(0.95) contrast(1.1)',
+                            transition: 'transform 0.5s ease',
+                            filter: 'contrast(1.1) saturate(1.2)',
+                            clipPath: 'polygon(0 0, 100% 0, 100% 90%, 0 100%)',
                         }}
                     />
                     <Box
@@ -140,35 +138,27 @@ const Card = ({ product }) => {
                             left: 0,
                             right: 0,
                             bottom: 0,
-                            background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%)',
+                            background: isHovered
+                                ? 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6))'
+                                : 'linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5))',
                             zIndex: 1,
+                            transition: 'all 0.3s ease',
                         }}
                     />
                 </Box>
 
-                <CardContent sx={{ 
-                    flexGrow: 1, 
-                    p: 3,
-                    background: theme => theme.palette.mode === 'dark' 
-                        ? 'linear-gradient(180deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,1) 100%)'
-                        : 'linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,1) 100%)',
-                }}>
-                    {/* Restaurant Name */}
-                    <Typography 
-                        variant="h5" 
-                        sx={{ 
-                            fontWeight: 700,
-                            color: theme => theme.palette.text.primary,
-                            mb: 1,
-                            lineHeight: 1.3,
-                            fontSize: '1.25rem',
-                            textShadow: '0 1px 2px rgba(0,0,0,0.1)'
-                        }}
-                    >
-                        {product.name}
-                    </Typography>
-
-                    {/* Cuisine Types */}
+                <CardContent 
+                    sx={{ 
+                        flexGrow: 1, 
+                        p: 3,
+                        mt: -4,
+                        position: 'relative',
+                        borderRadius: '24px 24px 0 0',
+                        background: theme => theme.palette.mode === 'dark' 
+                            ? 'linear-gradient(to bottom, rgba(26,26,26,0.98), rgba(26,26,26,1))'
+                            : 'linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(255,255,255,1))',
+                        backdropFilter: 'blur(10px)',
+                    }}>
                     <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
                         {product.tags?.map(tag => (
                             <Chip
@@ -176,19 +166,33 @@ const Card = ({ product }) => {
                                 label={tag}
                                 size="small"
                                 sx={{ 
-                                    backgroundColor: theme => theme.palette.mode === 'dark' 
-                                        ? 'rgba(255,255,255,0.1)' 
-                                        : 'rgba(0,0,0,0.08)',
-                                    fontSize: '0.8rem',
+                                    background: theme => theme.palette.mode === 'dark'
+                                        ? 'rgba(255,255,255,0.1)'
+                                        : 'rgba(0,0,0,0.05)',
+                                    fontSize: '0.75rem',
                                     fontWeight: 600,
-                                    color: theme => theme.palette.text.primary,
-                                    padding: '4px 8px'
+                                    borderRadius: '8px',
+                                    height: '24px',
                                 }}
                             />
                         ))}
                     </Box>
 
-                    {/* Restaurant Info */}
+                    <Typography 
+                        variant="h6" 
+                        sx={{ 
+                            fontWeight: 700,
+                            mb: 1,
+                            fontSize: '1.25rem',
+                            letterSpacing: '-0.02em',
+                            color: theme => theme.palette.mode === 'dark' 
+                                ? '#fff' 
+                                : '#2d3436',
+                        }}
+                    >
+                        {product.name}
+                    </Typography>
+
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                             <Rating 
@@ -229,7 +233,6 @@ const Card = ({ product }) => {
                         </Box>
                     </Box>
 
-                    {/* Average Cost */}
                     <Typography variant="body2" sx={{ 
                         color: theme => theme.palette.text.primary,
                         fontWeight: 600,
@@ -237,51 +240,50 @@ const Card = ({ product }) => {
                     }}>
                         Average cost for two: ₹{formatPrice(product.price * 2)}
                     </Typography>
-                    {product.isPopular && (
-                        <Chip
-                            icon={<HotIcon sx={{ color: '#fff !important' }} />}
-                            label="Popular"
-                            sx={{
-                                position: 'absolute',
-                                top: 16,
-                                right: 16,
-                                background: 'linear-gradient(45deg, #ff4081, #c51162)',
-                                color: '#fff',
-                                fontWeight: 600,
-                                zIndex: 2,
-                            }}
-                        />
-                    )}
                 </CardContent>
 
-                <CardActions sx={{ 
-                    p: 3, 
-                    pt: 0,
-                    background: theme => theme.palette.mode === 'dark' 
-                        ? 'rgba(18,18,18,1)'
-                        : 'rgba(255,255,255,1)',
-                }}>
+                <CardActions sx={{ p: 3, pt: 0 }}>
                     <Button 
                         fullWidth
-                        size="large" 
                         variant="contained"
                         onClick={() => navigate(`/product/${product.id}`)}
                         sx={{
-                            borderRadius: 2,
+                            borderRadius: '12px',
                             fontWeight: 600,
-                            background: 'linear-gradient(45deg, #ff7043, #e64a19)',
-                            boxShadow: '0 4px 15px rgba(255, 112, 67, 0.3)',
-                            transition: 'all 0.3s ease',
+                            padding: '10px 24px',
+                            fontSize: '0.95rem',
+                            textTransform: 'none',
+                            background: theme => theme.palette.primary.main,
                             '&:hover': {
-                                background: 'linear-gradient(45deg, #e64a19, #d84315)',
-                                boxShadow: '0 6px 20px rgba(255, 112, 67, 0.4)',
+                                background: theme => theme.palette.primary.dark,
                                 transform: 'translateY(-2px)',
-                            }
+                            },
+                            transition: 'all 0.2s ease',
                         }}
                     >
                         View Restaurant
                     </Button>
                 </CardActions>
+
+                {product.isPopular && (
+                    <Chip
+                        icon={<HotIcon sx={{ color: '#fff' }} />}
+                        label="Popular"
+                        sx={{
+                            position: 'absolute',
+                            top: 16,
+                            right: 16,
+                            background: 'linear-gradient(45deg, #FF416C, #FF4B2B)',
+                            color: '#fff',
+                            fontWeight: 600,
+                            zIndex: 2,
+                            fontSize: '0.8rem',
+                            height: '28px',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 12px rgba(255, 65, 108, 0.3)',
+                        }}
+                    />
+                )}
             </MuiCard>
         </Fade>
     );

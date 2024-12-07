@@ -2,19 +2,28 @@ import React from 'react';
 import { Container, Typography, Box, Paper } from '@mui/material';
 
 const About = () => {
+  // Updated color scheme with more vibrant colors
+  const developerColors = {
+    'Atul Kumar Das': '#FF3366',      // Vibrant Pink
+    'Ojashwee Udgata': '#00E5FF',     // Electric Blue
+    'Tanmay Kumar Parida': '#7CFF3F',  // Neon Green
+    'Swastik Magraj': '#FF9100'       // Bright Orange
+  };
+
   return (
     <Container maxWidth="md" sx={{ py: 8 }}>
       <Paper 
         elevation={6}
         sx={{
           p: 4,
-          background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(45, 45, 45, 0.95))',
-          borderRadius: '20px',
-          border: '1px solid rgba(252, 128, 25, 0.3)',
+          background: 'linear-gradient(135deg, rgba(15, 15, 15, 0.97), rgba(30, 30, 30, 0.97))',
+          borderRadius: '30px',
+          border: '2px solid rgba(252, 128, 25, 0.5)',
+          boxShadow: '0 8px 32px rgba(252, 128, 25, 0.2), 0 16px 48px rgba(0, 0, 0, 0.3)',
           transition: 'transform 0.3s ease-in-out',
           '&:hover': {
             transform: 'scale(1.02)',
-            boxShadow: '0 8px 24px rgba(252, 128, 25, 0.2)',
+            boxShadow: '0 12px 36px rgba(252, 128, 25, 0.25), 0 20px 60px rgba(0, 0, 0, 0.35)',
           },
         }}
       >
@@ -25,8 +34,10 @@ const About = () => {
           sx={{ 
             color: '#FC8019',
             textAlign: 'center',
-            fontWeight: 'bold',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+            fontWeight: '900',
+            textShadow: '3px 3px 6px rgba(0,0,0,0.4)',
+            fontSize: { xs: '2.5rem', md: '3.5rem' },
+            letterSpacing: '1px',
           }}
         >
           About Xwiggy
@@ -44,16 +55,22 @@ const About = () => {
           A modern food delivery platform built with cutting-edge technologies
         </Typography>
 
-        <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap', justifyContent: 'center', mb: 6 }}>
+        <Box sx={{ display: 'flex', gap: 5, flexWrap: 'wrap', justifyContent: 'center', mb: 8 }}>
           <Paper 
             elevation={3}
             sx={{
-              p: 3,
+              p: 4,
               flex: '1 1 300px',
-              background: 'rgba(252, 128, 25, 0.1)',
-              borderRadius: '12px',
-              transition: 'all 0.3s ease',
-              '&:hover': { transform: 'translateY(-5px)' }
+              background: 'rgba(252, 128, 25, 0.15)',
+              borderRadius: '20px',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.4s ease',
+              border: '1px solid rgba(252, 128, 25, 0.3)',
+              '&:hover': { 
+                transform: 'translateY(-8px)',
+                boxShadow: '0 15px 30px rgba(252, 128, 25, 0.25)',
+                background: 'rgba(252, 128, 25, 0.2)',
+              }
             }}
           >
             <Typography variant="h5" sx={{ color: '#FC8019', mb: 2 }}>Frontend Stack</Typography>
@@ -69,12 +86,16 @@ const About = () => {
           <Paper 
             elevation={3}
             sx={{
-              p: 3,
+              p: 4,
               flex: '1 1 300px',
-              background: 'rgba(252, 128, 25, 0.1)',
-              borderRadius: '12px',
+              background: 'rgba(252, 128, 25, 0.15)',
+              borderRadius: '16px',
+              backdropFilter: 'blur(10px)',
               transition: 'all 0.3s ease',
-              '&:hover': { transform: 'translateY(-5px)' }
+              '&:hover': { 
+                transform: 'translateY(-5px)',
+                boxShadow: '0 12px 20px rgba(252, 128, 25, 0.2)'
+              }
             }}
           >
             <Typography variant="h5" sx={{ color: '#FC8019', mb: 2 }}>Backend Stack</Typography>
@@ -91,19 +112,29 @@ const About = () => {
         <Paper 
           elevation={3}
           sx={{
-            p: 4,
-            background: 'rgba(252, 128, 25, 0.05)',
-            borderRadius: '12px',
+            p: 6,
+            background: 'rgba(252, 128, 25, 0.1)',
+            borderRadius: '24px',
+            backdropFilter: 'blur(15px)',
+            border: '1px solid rgba(252, 128, 25, 0.2)',
           }}
         >
-          <Typography variant="h5" sx={{ color: '#FC8019', mb: 3, textAlign: 'center' }}>
+          <Typography variant="h5" sx={{ 
+            color: '#FC8019', 
+            mb: 5, 
+            textAlign: 'center',
+            fontSize: '2.5rem',
+            fontWeight: '900',
+            textShadow: '3px 3px 6px rgba(0,0,0,0.3)',
+            letterSpacing: '1px',
+          }}>
             Development Team
           </Typography>
 
           <Box sx={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: 3,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 5,
             color: 'text.primary' 
           }}>
             {[
@@ -116,19 +147,48 @@ const About = () => {
                 key={member.name}
                 sx={{
                   textAlign: 'center',
-                  p: 2,
-                  borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  transition: 'all 0.3s ease',
+                  p: 4,
+                  borderRadius: '16px',
+                  background: `linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03))`,
+                  border: `2px solid ${developerColors[member.name]}50`,
+                  transition: 'all 0.4s ease',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  '&:before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: `linear-gradient(145deg, ${developerColors[member.name]}10, transparent)`,
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease',
+                  },
                   '&:hover': {
-                    background: 'rgba(252, 128, 25, 0.1)',
+                    transform: 'translateY(-12px) scale(1.03)',
+                    boxShadow: `0 15px 30px ${developerColors[member.name]}30`,
+                    '&:before': {
+                      opacity: 1,
+                    }
                   }
                 }}
               >
-                <Typography variant="subtitle1" sx={{ color: '#FC8019', mb: 1 }}>
+                <Typography variant="subtitle1" sx={{ 
+                  color: developerColors[member.name],
+                  mb: 2,
+                  fontSize: '1.4rem',
+                  fontWeight: '900',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                  letterSpacing: '0.5px',
+                }}>
                   {member.role}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{
+                  fontSize: '1.2rem',
+                  color: 'rgba(255, 255, 255, 0.95)',
+                  fontWeight: '500',
+                }}>
                   {member.name}
                 </Typography>
               </Box>
