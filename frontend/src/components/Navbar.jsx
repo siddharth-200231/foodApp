@@ -46,24 +46,26 @@ import Logo from './Logo';
 // Styled components
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
-  borderRadius: '12px',
-  backgroundColor: 'var(--dark-bg-elevated)',
-  border: '1px solid var(--glass-border)',
+  borderRadius: '16px',
+  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  backdropFilter: 'blur(10px)',
+  border: '1px solid rgba(252, 128, 25, 0.2)',
   '&:hover': {
-    backgroundColor: 'var(--dark-bg-secondary)',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
     borderColor: '#FC8019',
-    boxShadow: '0 0 10px rgba(252, 128, 25, 0.3)',
+    boxShadow: '0 0 20px rgba(252, 128, 25, 0.3)',
+    transform: 'translateY(-2px)',
   },
   '&:focus-within': {
-    backgroundColor: 'var(--dark-bg-secondary)',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderColor: '#FC8019',
-    boxShadow: '0 0 0 3px rgba(252, 128, 25, 0.2)',
+    boxShadow: '0 0 25px rgba(252, 128, 25, 0.4)',
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
   maxWidth: '500px',
-  transition: 'all 0.2s ease',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -77,7 +79,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   color: 'rgba(255, 255, 255, 0.5)',
   transition: 'color 0.2s ease',
   '.MuiInputBase-root:focus-within + &': {
-    color: '#FC8019',
+    color: '#3b82f6',
   }
 }));
 
@@ -339,10 +341,19 @@ const UserMenu = ({ anchorEl, handleClose, user, handleLogout }) => (
     onClose={handleClose}
     PaperProps={{
       sx: {
-        backgroundColor: 'var(--dark-bg-secondary)',
-        border: '1px solid var(--glass-border)',
-        borderRadius: '12px',
+        backgroundColor: 'rgba(45, 45, 45, 0.95)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(252, 128, 25, 0.2)',
+        borderRadius: '16px',
         mt: 1.5,
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+        '& .MuiMenuItem-root': {
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            backgroundColor: 'rgba(252, 128, 25, 0.1)',
+            transform: 'translateX(5px)',
+          }
+        },
         '& .MuiListItemIcon-root': {
           color: '#FC8019',
         },
@@ -437,8 +448,10 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
 
   return (
     <AppBar position="sticky" className="navbar" sx={{ 
-      background: 'linear-gradient(135deg, #1a1a1a, #2d2d2d)',
-      borderBottom: '1px solid rgba(252, 128, 25, 0.2)'
+      background: 'linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(45, 45, 45, 0.95))',
+      backdropFilter: 'blur(10px)',
+      borderBottom: '1px solid rgba(252, 128, 25, 0.2)',
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
     }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
@@ -456,19 +469,34 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
               display: { xs: 'none', sm: 'flex' },
               alignItems: 'center',
               gap: 1,
+              position: 'relative',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: -8,
+                left: 0,
+                width: '100%',
+                height: '2px',
+                background: 'linear-gradient(90deg, transparent, #FC8019, transparent)',
+                opacity: 0,
+                transition: 'opacity 0.3s ease',
+              },
+              '&:hover::after': {
+                opacity: 1,
+              }
             }}
           >
             <ShoppingBag 
               sx={{ 
                 fontSize: { sm: '1.8rem', md: '2.2rem' },
                 color: '#FC8019',
-                animation: 'bounce 2s infinite',
-                '@keyframes bounce': {
+                animation: 'float 3s ease-in-out infinite',
+                '@keyframes float': {
                   '0%, 100%': {
-                    transform: 'translateY(0)',
+                    transform: 'translateY(0) rotate(0deg)',
                   },
                   '50%': {
-                    transform: 'translateY(-5px)',
+                    transform: 'translateY(-5px) rotate(5deg)',
                   },
                 },
               }} 
@@ -553,10 +581,14 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
               onClick={() => navigate('/cart')}
               sx={{
                 p: { xs: 0.5, sm: 1 },
+                transition: 'all 0.3s ease',
                 '&:hover': {
-                  backgroundColor: 'var(--primary-light)',
-                  transform: 'translateY(-3px)',
+                  backgroundColor: 'rgba(252, 128, 25, 0.1)',
+                  transform: 'translateY(-3px) scale(1.1)',
                 },
+                '&:active': {
+                  transform: 'translateY(0) scale(0.95)',
+                }
               }}
             >
               <Badge 
@@ -564,13 +596,15 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
                 color="primary"
                 sx={{
                   '& .MuiBadge-badge': {
-                    fontSize: { xs: '0.65rem', sm: '0.75rem' },
-                    minWidth: { xs: '18px', sm: '20px' },
-                    height: { xs: '18px', sm: '20px' },
+                    background: 'linear-gradient(45deg, #FC8019, #FF9A4D)',
+                    transition: 'all 0.3s ease',
                   }
                 }}
               >
-                <ShoppingCartIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
+                <ShoppingCartIcon sx={{ 
+                  fontSize: { xs: '1.2rem', sm: '1.5rem' },
+                  transition: 'all 0.3s ease',
+                }} />
               </Badge>
             </IconButton>
 

@@ -26,6 +26,7 @@ import {
     LocalFireDepartment as HotIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import FoodPlaceholderSVG from './FoodPlaceholderSVG';
 
 const Card = ({ product }) => {
     if (!product) {
@@ -80,22 +81,31 @@ const Card = ({ product }) => {
                 {/* Restaurant Image */}
                 <Box sx={{ position: 'relative', pt: '56.25%' }}> {/* 16:9 aspect ratio */}
                     {!imageLoaded && (
-                        <Skeleton 
-                            variant="rectangular" 
-                            sx={{ 
+                        <Box
+                            sx={{
                                 position: 'absolute',
                                 top: 0,
                                 left: 0,
                                 width: '100%',
-                                height: '100%'
-                            }} 
-                        />
+                                height: '100%',
+                                bgcolor: '#FFE0B2',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <FoodPlaceholderSVG />
+                        </Box>
                     )}
                     <CardMedia
                         component="img"
-                        image={product.imageUrl || `https://via.placeholder.com/300?text=${product.name}`}
+                        image={product.imageUrl || ''}
                         alt={product.name}
                         onLoad={() => setImageLoaded(true)}
+                        onError={(e) => {
+                            e.target.style.display = 'none';
+                            setImageLoaded(false);
+                        }}
                         sx={{ 
                             position: 'absolute',
                             top: 0,

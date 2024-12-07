@@ -1,28 +1,28 @@
 /* Core theme variables */
 :root {
-  /* Dark theme colors with warmer tones */
-  --dark-bg-primary: #1a1a1a;
-  --dark-bg-secondary: #2d2d2d;
-  --dark-bg-elevated: #3d3d3d;
+  /* Dark theme colors with black & orange tones */
+  --dark-bg-primary: #000000;
+  --dark-bg-secondary: #1a1a1a;
+  --dark-bg-elevated: #262626;
   --dark-text-primary: #ffffff;
-  --dark-text-secondary: #e0e0e0;
-  --dark-text-muted: #a0a0a0;
-  --dark-hover: rgba(252, 128, 25, 0.1);
+  --dark-text-secondary: #f0f0f0;
+  --dark-text-muted: #b0b0b0;
+  --dark-hover: rgba(255, 102, 0, 0.1);
   --glass-border: rgba(255, 255, 255, 0.08);
   
-  /* Primary colors - warm orange theme */
-  --primary-color: #FC8019;
-  --primary-light: rgba(252, 128, 25, 0.15);
-  --primary-dark: #e67216;
-  --primary-muted: rgba(252, 128, 25, 0.1);
+  /* Primary colors - vibrant orange theme */
+  --primary-color: #FF6600;
+  --primary-light: rgba(255, 102, 0, 0.15);
+  --primary-dark: #e65c00;
+  --primary-muted: rgba(255, 102, 0, 0.1);
   
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #FC8019, #FF9A4D);
+  --gradient-primary: linear-gradient(135deg, #FF6600, #FF8533);
   
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(252, 128, 25, 0.15);
-  --shadow-md: 0 4px 12px rgba(252, 128, 25, 0.2);
-  --shadow-lg: 0 8px 16px rgba(252, 128, 25, 0.25);
+  --shadow-sm: 0 2px 8px rgba(255, 102, 0, 0.15);
+  --shadow-md: 0 4px 12px rgba(255, 102, 0, 0.2);
+  --shadow-lg: 0 8px 16px rgba(255, 102, 0, 0.25);
 }
 
 /* Global styles */

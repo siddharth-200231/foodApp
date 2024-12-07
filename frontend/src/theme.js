@@ -4,22 +4,22 @@ export const getTheme = (mode) => createTheme({
   palette: {
     mode,
     primary: {
-      main: '#ff4757',
-      light: '#ff6b81',
-      dark: '#ff1f3d',
+      main: mode === 'dark' ? '#ff5722' : '#ff9800',
+      light: mode === 'dark' ? '#ff8a3d' : '#ffb74d',
+      dark: mode === 'dark' ? '#c41c00' : '#f57c00',
     },
     secondary: {
-      main: '#2ed573',
-      light: '#7bed9f',
-      dark: '#26ae60',
+      main: mode === 'dark' ? '#03a9f4' : '#2196f3',
+      light: mode === 'dark' ? '#67daff' : '#6ec6ff',
+      dark: mode === 'dark' ? '#007ac1' : '#1976d2',
     },
     background: {
-      default: mode === 'dark' ? '#1a1a1a' : '#f8f9fa',
-      paper: mode === 'dark' ? '#2d3436' : '#ffffff',
+      default: '#121212',
+      paper: '#1E1E1E',
     },
     text: {
-      primary: mode === 'dark' ? '#ffffff' : '#2d3436',
-      secondary: mode === 'dark' ? '#b2bec3' : '#636e72',
+      primary: mode === 'dark' ? '#ffffff' : '#000000',
+      secondary: mode === 'dark' ? '#b0bec5' : '#424242',
     },
     action: {
       active: mode === 'dark' ? '#fff' : '#000',
@@ -33,9 +33,11 @@ export const getTheme = (mode) => createTheme({
         root: {
           backdropFilter: 'blur(8px)',
           backgroundColor: mode === 'dark' 
-            ? 'rgba(26, 26, 26, 0.95)'
+            ? 'rgba(16, 31, 51, 0.95)'
             : 'rgba(255, 255, 255, 0.95)',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          boxShadow: mode === 'dark'
+            ? '0 2px 8px rgba(0,0,0,0.3)'
+            : '0 2px 8px rgba(0,0,0,0.1)',
         }
       }
     },
@@ -61,12 +63,12 @@ export const getTheme = (mode) => createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: '20px',
+          borderRadius: '12px',
           boxShadow: mode === 'dark'
             ? '0 4px 12px rgba(0,0,0,0.3)'
             : '0 4px 12px rgba(0,0,0,0.1)',
           '&:hover': {
-            transform: 'translateY(-8px)',
+            transform: 'translateY(-4px)',
             boxShadow: mode === 'dark'
               ? '0 8px 16px rgba(0,0,0,0.4)'
               : '0 8px 16px rgba(0,0,0,0.15)',

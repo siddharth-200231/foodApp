@@ -60,33 +60,44 @@ const Signup = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 4,
+          marginBottom: 4,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
         <Paper
-          elevation={3}
+          elevation={6}
           sx={{
-            padding: 4,
+            padding: { xs: 3, sm: 6 },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             background: 'var(--dark-bg-secondary)',
-            borderRadius: 2,
-            width: '100%'
+            borderRadius: 3,
+            width: '100%',
+            border: '1px solid var(--primary-color)',
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-            Sign Up
+          <Typography 
+            component="h1" 
+            variant="h4" 
+            sx={{ 
+              mb: 4,
+              fontFamily: 'Playfair Display, serif',
+              color: 'var(--primary-color)',
+              fontWeight: 'bold'
+            }}
+          >
+            Create Your Dining Profile
           </Typography>
 
           {error && (
-            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+            <Alert severity="error" sx={{ width: '100%', mb: 3 }}>
               {error}
             </Alert>
           )}
@@ -105,9 +116,14 @@ const Signup = () => {
               onChange={handleChange}
               disabled={loading}
               sx={{
-                mb: 2,
+                mb: 3,
                 '& .MuiInputBase-root': {
-                  color: 'var(--dark-text-primary)'
+                  color: 'var(--dark-text-primary)',
+                  fontSize: '1.1rem',
+                  borderRadius: 2
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: '1.1rem'
                 }
               }}
             />
@@ -123,9 +139,14 @@ const Signup = () => {
               onChange={handleChange}
               disabled={loading}
               sx={{
-                mb: 2,
+                mb: 3,
                 '& .MuiInputBase-root': {
-                  color: 'var(--dark-text-primary)'
+                  color: 'var(--dark-text-primary)',
+                  fontSize: '1.1rem',
+                  borderRadius: 2
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: '1.1rem'
                 }
               }}
             />
@@ -141,7 +162,7 @@ const Signup = () => {
               value={formData.password}
               onChange={handleChange}
               disabled={loading}
-              sx={{ mb: 2 }}
+              sx={{ mb: 3 }}
             />
             <TextField
               margin="normal"
@@ -162,17 +183,35 @@ const Signup = () => {
               fullWidth
               variant="contained"
               disabled={loading}
-              sx={{ mb: 2 }}
+              sx={{
+                mb: 3,
+                mt: 2,
+                py: 1.5,
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                borderRadius: 2,
+                backgroundColor: 'var(--primary-color)',
+                '&:hover': {
+                  backgroundColor: 'var(--primary-color-dark)',
+                }
+              }}
             >
-              {loading ? 'Creating Account...' : 'Sign Up'}
+              {loading ? 'Creating Your Profile...' : 'Join Our Community'}
             </Button>
+            
             <Box sx={{ textAlign: 'center' }}>
               <Link
                 href="/login"
-                variant="body2"
-                sx={{ color: 'var(--primary-color)' }}
+                variant="body1"
+                sx={{ 
+                  color: 'var(--primary-color)',
+                  textDecoration: 'none',
+                  '&:hover': {
+                    textDecoration: 'underline'
+                  }
+                }}
               >
-                Already have an account? Login
+                Already a member? Sign in to your account
               </Link>
             </Box>
           </Box>

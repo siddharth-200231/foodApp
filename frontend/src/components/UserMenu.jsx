@@ -41,10 +41,29 @@ const UserMenu = ({ user, onLogout }) => {
                     p: 0.5,
                     border: '2px solid',
                     borderColor: 'primary.main',
-                    '&:hover': { transform: 'scale(1.05)' }
+                    borderRadius: '12px',
+                    transition: 'all 0.2s ease-in-out',
+                    backgroundColor: 'primary.light',
+                    '&:hover': {
+                        transform: 'scale(1.05)',
+                        backgroundColor: 'primary.main',
+                        '& .MuiAvatar-root': {
+                            color: 'primary.main',
+                            backgroundColor: 'white'
+                        }
+                    }
                 }}
             >
-                <Avatar sx={{ width: 32, height: 32 }}>
+                <Avatar 
+                    sx={{ 
+                        width: 32, 
+                        height: 32,
+                        bgcolor: 'white',
+                        color: 'primary.main',
+                        fontWeight: 'bold',
+                        transition: 'all 0.2s ease-in-out'
+                    }}
+                >
                     {user.name ? user.name[0].toUpperCase() : 'U'}
                 </Avatar>
             </IconButton>
@@ -53,29 +72,71 @@ const UserMenu = ({ user, onLogout }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
                 PaperProps={{
-                    sx: { width: 220, mt: 1.5 }
+                    elevation: 3,
+                    sx: {
+                        width: 240,
+                        mt: 1.5,
+                        borderRadius: '12px',
+                        '& .MuiList-root': {
+                            py: 1
+                        }
+                    }
                 }}
             >
-                <MenuItem sx={{ py: 1 }}>
-                    <Typography variant="subtitle1" noWrap>
+                <MenuItem sx={{ py: 1.5 }}>
+                    <Typography 
+                        variant="subtitle1" 
+                        noWrap 
+                        sx={{ 
+                            fontWeight: 600,
+                            color: 'primary.main'
+                        }}
+                    >
                         {user.name || 'User'}
                     </Typography>
                 </MenuItem>
                 <Typography
                     variant="body2"
-                    color="text.secondary"
-                    sx={{ px: 2, pb: 1 }}
+                    sx={{ 
+                        px: 2, 
+                        pb: 1.5,
+                        color: 'text.secondary',
+                        fontSize: '0.875rem'
+                    }}
                 >
                     {user.email}
                 </Typography>
-                <Divider />
-                <MenuItem onClick={() => navigate('/orders')}>
+                <Divider sx={{ my: 1 }} />
+                <MenuItem 
+                    onClick={() => navigate('/orders')}
+                    sx={{
+                        py: 1.2,
+                        '&:hover': {
+                            backgroundColor: 'primary.lighter',
+                            '& .MuiListItemIcon-root': {
+                                color: 'primary.main'
+                            }
+                        }
+                    }}
+                >
                     <ListItemIcon>
                         <ShoppingBag fontSize="small" />
                     </ListItemIcon>
                     My Orders
                 </MenuItem>
-                <MenuItem onClick={handleLogout}>
+                <MenuItem 
+                    onClick={handleLogout}
+                    sx={{
+                        py: 1.2,
+                        '&:hover': {
+                            backgroundColor: 'error.lighter',
+                            color: 'error.main',
+                            '& .MuiListItemIcon-root': {
+                                color: 'error.main'
+                            }
+                        }
+                    }}
+                >
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

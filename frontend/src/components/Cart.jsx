@@ -20,7 +20,7 @@ import {
 } from '@mui/icons-material';
 import { useNotification } from '../hooks/useNotification';
 import axios from '../axios';
-import { teal, orange } from '@mui/material/colors';
+import { orange } from '@mui/material/colors';
 
 const Cart = () => {
   const { cart, removeFromCart } = useContext(AppContext);
@@ -69,16 +69,16 @@ const Cart = () => {
             alignItems: 'center',
             gap: 3,
             borderRadius: 4,
-            background: `linear-gradient(145deg, ${teal[50]}, ${orange[50]})`,
+            background: '#fff',
           }}
         >
-          <RemoveShoppingCart sx={{ fontSize: 80, color: teal[300] }} />
-          <Typography variant="h4" gutterBottom fontWeight="bold" color={teal[800]}>
-            Your cart is empty
+          <RemoveShoppingCart sx={{ fontSize: 80, color: orange[700] }} />
+          <Typography variant="h4" gutterBottom fontWeight="bold" color="text.primary">
+            Your order is empty
           </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 500 }}>
-            Looks like you haven't added anything to your cart yet.
-            Explore our products and find something you love!
+          <Typography variant="h6" color="text.primary" sx={{ maxWidth: 500, opacity: 0.8 }}>
+            Looks like you haven't added any dishes to your order yet.
+            Check out our menu and discover delicious meals!
           </Typography>
         </Paper>
       </Container>
@@ -94,11 +94,12 @@ const Cart = () => {
         gap: 2,
         p: 3,
         borderRadius: 2,
-        background: `linear-gradient(90deg, ${teal[50]}, ${orange[50]})`,
+        bgcolor: '#fff',
+        boxShadow: 1
       }}>
-        <ShoppingCart sx={{ fontSize: 40, color: teal[600] }} />
-        <Typography variant="h3" fontWeight="bold" color={teal[800]}>
-          Shopping Cart
+        <ShoppingCart sx={{ fontSize: 40, color: orange[700] }} />
+        <Typography variant="h3" fontWeight="bold" color="text.primary">
+          Your Order
         </Typography>
       </Box>
 
@@ -108,7 +109,7 @@ const Cart = () => {
             p: 3, 
             mb: 2, 
             borderRadius: 3,
-            background: `linear-gradient(145deg, ${orange[50]}, #ffffff)`,
+            bgcolor: '#fff',
           }}>
             {cart.map((item) => (
               <Card 
@@ -116,6 +117,7 @@ const Cart = () => {
                 sx={{ 
                   mb: 3, 
                   borderRadius: 2,
+                  bgcolor: '#fff',
                   '&:last-child': { mb: 0 },
                   transition: 'all 0.3s ease',
                   '&:hover': {
@@ -133,7 +135,7 @@ const Cart = () => {
                         alt={item.product.name}
                         sx={{
                           width: '100%',
-                          height: 'auto',
+                          height: 150,
                           borderRadius: 2,
                           objectFit: 'cover',
                           boxShadow: 2
@@ -143,23 +145,31 @@ const Cart = () => {
                     <Grid item xs={12} sm={9}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Box>
-                          <Typography variant="h5" fontWeight="bold" gutterBottom>
+                          <Typography variant="h5" fontWeight="bold" color="text.primary" gutterBottom>
                             {item.product.name}
                           </Typography>
-                          <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-                            {item.product.brand}
+                          <Typography 
+                            variant="body1" 
+                            color="text.primary" 
+                            sx={{ opacity: 0.8 }} 
+                            gutterBottom
+                          >
+                            {item.product.description || 'No description available'}
                           </Typography>
-                          <Typography variant="h5" color={teal[600]} fontWeight="bold" gutterBottom>
+                          <Typography variant="h5" color={orange[700]} fontWeight="bold" gutterBottom>
                             ₹{formatPrice(item.product.price)}
                           </Typography>
                           <Box sx={{ 
                             mt: 2, 
                             p: 1, 
                             borderRadius: 1, 
-                            bgcolor: teal[50],
-                            display: 'inline-block'
+                            bgcolor: orange[50],
+                            border: `1px solid ${orange[200]}`,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 1
                           }}>
-                            <Typography variant="body1" fontWeight="medium">
+                            <Typography variant="body1" fontWeight="medium" color="text.primary">
                               Quantity: {item.quantity}
                             </Typography>
                           </Box>
@@ -194,30 +204,35 @@ const Cart = () => {
               position: 'sticky', 
               top: 24,
               borderRadius: 3,
-              background: `linear-gradient(145deg, ${orange[100]}, ${teal[50]})`,
+              bgcolor: '#fff',
             }}
           >
-            <Typography variant="h5" gutterBottom color={teal[800]} fontWeight="bold">
-              Order Summary
+            <Typography variant="h5" gutterBottom color="text.primary" fontWeight="bold">
+              Bill Details
             </Typography>
             <Divider sx={{ my: 3 }} />
             
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-              <Typography>Items ({cart.length})</Typography>
-              <Typography>₹{calculateTotal()}</Typography>
+              <Typography color="text.primary">Items ({cart.length})</Typography>
+              <Typography color="text.primary">₹{formatPrice(calculateTotal())}</Typography>
             </Box>
             
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-              <Typography>Delivery</Typography>
-              <Typography color="success.main">Free</Typography>
+              <Typography color="text.primary">Delivery Charge</Typography>
+              <Typography color="success.main" fontWeight="medium">Free</Typography>
+            </Box>
+            
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+              <Typography color="text.primary">GST (5%)</Typography>
+              <Typography color="text.primary">₹{formatPrice(calculateTotal() * 0.05)}</Typography>
             </Box>
             
             <Divider sx={{ my: 2 }} />
             
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-              <Typography variant="h6">Total Amount</Typography>
-              <Typography variant="h6" color={teal[600]}>
-                ₹{calculateTotal()}
+              <Typography variant="h6" color="text.primary" fontWeight="bold">Total Amount</Typography>
+              <Typography variant="h6" color={orange[700]} fontWeight="bold">
+                ₹{formatPrice(calculateTotal() * 1.05)}
               </Typography>
             </Box>
 
@@ -232,16 +247,16 @@ const Cart = () => {
                 fontSize: '1.1rem',
                 fontWeight: 'bold',
                 borderRadius: 2,
-                bgcolor: teal[600],
+                bgcolor: orange[700],
                 '&:hover': {
-                  bgcolor: teal[700],
+                  bgcolor: orange[800],
                   transform: 'translateY(-2px)',
                   boxShadow: 4
                 },
                 transition: 'all 0.3s ease'
               }}
             >
-              Proceed to Checkout
+              Place Order
             </Button>
           </Paper>
         </Grid>
