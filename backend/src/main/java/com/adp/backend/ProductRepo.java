@@ -12,6 +12,6 @@ import com.adp.backend.models.Product;
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     // Custom query to get distinct categories from the product table
-    @Query("SELECT DISTINCT p.resturant FROM Product p")
+    @Query("SELECT DISTINCT p.restaurant FROM Product p")
     List<String> findAllCategories();
 }

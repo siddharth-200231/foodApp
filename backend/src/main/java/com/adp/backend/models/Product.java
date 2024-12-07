@@ -25,7 +25,7 @@ public class Product {
     private String desc;
     
     private String name;
-    private String resturant;
+    private String restaurant;
     
     @Column(name = "release_date")
     private Date releaseDate;
@@ -37,5 +37,9 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public String getRestaurant() {
+        return restaurant;
     }
 }

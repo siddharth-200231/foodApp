@@ -39,9 +39,18 @@ const Home = ({ selectedRestaurant, searchQuery }) => {
       (product.name && product.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()));
     
+    // Only apply restaurant filter if a restaurant is selected and it's not "All Restaurants"
     const matchesRestaurant = !selectedRestaurant || 
+      selectedRestaurant === 'All Restaurants' ||
       (product.restaurant && product.restaurant.toLowerCase() === selectedRestaurant.toLowerCase());
-  
+    
+    // Debug logging
+    if (selectedRestaurant && selectedRestaurant !== 'All Restaurants') {
+      console.log('Filtering for restaurant:', selectedRestaurant);
+      console.log('Product restaurant:', product.restaurant);
+      console.log('Matches:', matchesRestaurant);
+    }
+    
     return matchesSearch && matchesRestaurant;
   });
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,8 +41,13 @@ public class ProductController {
         return service.addProduct(product);
     }
 
-    @GetMapping("/resturants")
-    public List<String> getCategories() {
-        return service.getAllCategory();
+    @GetMapping("/restaurants")
+    public ResponseEntity<List<String>> getAllRestaurants() {
+        try {
+            List<String> restaurants = service.getAllRestaurants();
+            return ResponseEntity.ok(restaurants);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

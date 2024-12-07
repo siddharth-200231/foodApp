@@ -2,6 +2,7 @@ package com.adp.backend.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,14 @@ public class ProductService {
     // Get all unique categories
     public List<String> getAllCategory() {
         return repo.findAllCategories(); // Fetch categories using the repository method
+    }
+
+    public List<String> getAllRestaurants() {
+        return repo.findAll()
+            .stream()
+            .map(product -> product.getRestaurant())
+            .filter(restaurant -> restaurant != null && !restaurant.isEmpty())
+            .distinct()
+            .collect(Collectors.toList());
     }
 }

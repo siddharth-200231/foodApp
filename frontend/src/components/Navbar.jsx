@@ -141,6 +141,7 @@ const RestaurantMenu = ({ onSelectRestaurant }) => {
   };
 
   const handleSelect = (restaurant) => {
+    console.log('Selected Restaurant:', restaurant);
     onSelectRestaurant(restaurant === 'All Restaurants' ? '' : restaurant);
     handleClose();
   };
@@ -385,7 +386,7 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get('/api/resturants');
+        const response = await axios.get('/api/restaurants');
         setRestaurants(['All Restaurants', ...response.data]);
       } catch (error) {
         console.error('Error fetching restaurants:', error);
