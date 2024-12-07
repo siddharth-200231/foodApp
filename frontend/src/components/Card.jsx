@@ -114,8 +114,9 @@ const Card = ({ product }) => {
                         variant="h5" 
                         sx={{ 
                             fontWeight: 700,
-                            color: '#2c3e50',
-                            mb: 1
+                            color: '#1a1a1a',
+                            mb: 1,
+                            lineHeight: 1.3
                         }}
                     >
                         {product.name}
@@ -129,8 +130,10 @@ const Card = ({ product }) => {
                                 label={tag}
                                 size="small"
                                 sx={{ 
-                                    backgroundColor: 'rgba(0,0,0,0.05)',
-                                    fontSize: '0.75rem'
+                                    backgroundColor: 'rgba(0,0,0,0.08)',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 500,
+                                    color: '#333'
                                 }}
                             />
                         ))}
@@ -145,20 +148,20 @@ const Card = ({ product }) => {
                                 size="small" 
                                 readOnly 
                             />
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="text.primary">
                                 ({product.ratingCount || '100+'})
                             </Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                <TimerIcon sx={{ fontSize: 18, color: '#666' }} />
-                                <Typography variant="body2" color="text.secondary">
+                                <TimerIcon sx={{ fontSize: 18, color: '#444' }} />
+                                <Typography variant="body2" sx={{ color: '#333' }}>
                                     {product.deliveryTime || '30-40 min'}
                                 </Typography>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                <ShippingIcon sx={{ fontSize: 18, color: '#666' }} />
-                                <Typography variant="body2" color="text.secondary">
+                                <ShippingIcon sx={{ fontSize: 18, color: '#444' }} />
+                                <Typography variant="body2" sx={{ color: '#333' }}>
                                     ₹{product.deliveryFee || 'Free'}
                                 </Typography>
                             </Box>
@@ -166,7 +169,7 @@ const Card = ({ product }) => {
                     </Box>
 
                     {/* Average Cost */}
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" sx={{ color: '#333', fontWeight: 500 }}>
                         Average cost for two: ₹{formatPrice(product.price * 2)}
                     </Typography>
                 </CardContent>

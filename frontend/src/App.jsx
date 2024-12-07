@@ -17,6 +17,7 @@ import { SnackbarProvider } from 'notistack';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const theme = useMemo(() => getTheme('dark'), []);
 
@@ -26,6 +27,10 @@ function App() {
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+  };
+
+  const handleRestaurantSelect = (restaurant) => {
+    setSelectedRestaurant(restaurant);
   };
 
   return (
@@ -42,6 +47,7 @@ function App() {
           <BrowserRouter>
             <Navbar 
               onSelectCategory={handleCategorySelect} 
+              onSelectRestaurant={handleRestaurantSelect} 
               onSearch={setSearchQuery}
               isDarkMode={true}
             />
@@ -49,7 +55,11 @@ function App() {
               <Route
                 path="/"
                 element={
-                  <Home selectedCategory={selectedCategory} searchQuery={searchQuery} />
+                  <Home 
+                    selectedCategory={selectedCategory} 
+                    selectedRestaurant={selectedRestaurant} 
+                    searchQuery={searchQuery} 
+                  />
                 }
               />
               <Route path="/login" element={<Login />} />
