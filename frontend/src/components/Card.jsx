@@ -61,6 +61,18 @@ const Card = ({ product }) => {
 
     const [isHovered, setIsHovered] = React.useState(false);
 
+    const isOutOfStock = !product.available || product.stockQuantity === 0;
+
+    const handleViewRestaurant = () => {
+        navigate(`/product/${product.id}`, {
+            state: { 
+                isAvailable: product.available,
+                stockQuantity: product.stockQuantity,
+                isOutOfStock: isOutOfStock
+            }
+        });
+    };
+
     return (
         <Fade in={true} timeout={700}>
             <MuiCard 
@@ -88,7 +100,9 @@ const Card = ({ product }) => {
                         '& .card-media': {
                             transform: 'scale(1.1)',
                         }
-                    }
+                    },
+                    opacity: isOutOfStock ? 0.8 : 1,
+                    filter: isOutOfStock ? 'grayscale(0.5)' : 'none',
                 }}
             >
                 <Box sx={{ position: 'relative', pt: '75%' }}>
@@ -240,13 +254,32 @@ const Card = ({ product }) => {
                     }}>
                         Average cost for two: ₹{formatPrice(product.price * 2)}
                     </Typography>
+
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 1, 
+                        mt: 2,
+                        color: isOutOfStock ? 'error.main' : 'success.main'
+                    }}>
+                        <Box sx={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: '50%',
+                            bgcolor: isOutOfStock ? 'error.main' : 'success.main',
+                        }} />
+                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {isOutOfStock ? 'Out of Stock' : 'Available'}
+                        </Typography>
+                    </Box>
                 </CardContent>
 
                 <CardActions sx={{ p: 3, pt: 0 }}>
                     <Button 
                         fullWidth
                         variant="contained"
-                        onClick={() => navigate(`/product/${product.id}`)}
+                        onClick={handleViewRestaurant}
+                        disabled={isOutOfStock}
                         sx={{
                             borderRadius: '12px',
                             fontWeight: 600,
@@ -259,9 +292,14 @@ const Card = ({ product }) => {
                                 transform: 'translateY(-2px)',
                             },
                             transition: 'all 0.2s ease',
+                            opacity: isOutOfStock ? 0.7 : 1,
+                            '&.Mui-disabled': {
+                                background: theme => theme.palette.action.disabledBackground,
+                                color: theme => theme.palette.action.disabled,
+                            }
                         }}
                     >
-                        View Restaurant
+                        {isOutOfStock ? 'Out of Stock' : 'View Restaurant'}
                     </Button>
                 </CardActions>
 
