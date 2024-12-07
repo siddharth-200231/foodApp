@@ -51,13 +51,13 @@ const Search = styled('div')(({ theme }) => ({
   border: '1px solid var(--glass-border)',
   '&:hover': {
     backgroundColor: 'var(--dark-bg-secondary)',
-    borderColor: 'var(--primary-color)',
-    boxShadow: '0 0 10px var(--primary-muted)',
+    borderColor: '#FC8019',
+    boxShadow: '0 0 10px rgba(252, 128, 25, 0.3)',
   },
   '&:focus-within': {
     backgroundColor: 'var(--dark-bg-secondary)',
-    borderColor: 'var(--primary-color)',
-    boxShadow: '0 0 0 3px var(--primary-muted)',
+    borderColor: '#FC8019',
+    boxShadow: '0 0 0 3px rgba(252, 128, 25, 0.2)',
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -77,7 +77,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   color: 'rgba(255, 255, 255, 0.5)',
   transition: 'color 0.2s ease',
   '.MuiInputBase-root:focus-within + &': {
-    color: '#3b82f6',
+    color: '#FC8019',
   }
 }));
 
@@ -343,6 +343,9 @@ const UserMenu = ({ anchorEl, handleClose, user, handleLogout }) => (
         border: '1px solid var(--glass-border)',
         borderRadius: '12px',
         mt: 1.5,
+        '& .MuiListItemIcon-root': {
+          color: '#FC8019',
+        },
       }
     }}
   >
@@ -433,7 +436,10 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
   };
 
   return (
-    <AppBar position="sticky" className="navbar" sx={{ background: 'linear-gradient(135deg, var(--dark-bg-primary), var(--dark-bg-secondary))' }}>
+    <AppBar position="sticky" className="navbar" sx={{ 
+      background: 'linear-gradient(135deg, #1a1a1a, #2d2d2d)',
+      borderBottom: '1px solid rgba(252, 128, 25, 0.2)'
+    }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           {/* Mobile Menu Icon */}

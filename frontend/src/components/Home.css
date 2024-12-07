@@ -1,122 +1,59 @@
 .home-container {
   padding: 2rem;
-  margin-top: 5rem;
-  min-height: 100vh;
-  background-color: #f8f9fa;
+  margin-top: 2rem;
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(135deg, var(--dark-bg-primary), var(--dark-bg-secondary));
 }
 
-.category-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.category-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #ff4757;  /* Food delivery red */
-  margin-bottom: 0.5rem;
-}
-
-.products-grid {
+.restaurant-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
   padding: 1rem;
 }
 
-.product-card {
-  background: white;
-  border-radius: 15px;
+.restaurant-card {
+  background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-bg-elevated));
+  border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.2s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f1f1;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
+.restaurant-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
 }
 
-.product-image {
+.restaurant-image {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.product-info {
-  padding: 1rem;
+.restaurant-info {
+  padding: 1.5rem;
 }
 
-.product-name {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #2d3436;
+.restaurant-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark-text-primary);
   margin-bottom: 0.5rem;
 }
 
-.product-price {
-  font-size: 1.3rem;
-  color: #ff4757;
-  font-weight: 700;
-}
-
-.delivery-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  color: #636e72;
+.restaurant-cuisine {
+  color: var(--primary-color);
   font-size: 0.9rem;
+  margin-bottom: 1rem;
 }
 
-.rating {
+.restaurant-meta {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.25rem;
-  background: #ffeaa7;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-/* Dark theme adjustments */
-.dark-theme .home-container {
-  background-color: #1a1a1a;
-}
-
-.dark-theme .product-card {
-  background: #2d3436;
-  border-color: #404040;
-}
-
-.dark-theme .product-name {
-  color: #f5f6fa;
-}
-
-.dark-theme .delivery-info {
-  color: #b2bec3;
-}
-
-@media (max-width: 768px) {
-  .home-container {
-    padding: 1rem;
-  }
-
-  .category-header {
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .category-title {
-    font-size: 2rem;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-  }
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
 } 
