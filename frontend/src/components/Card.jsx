@@ -68,13 +68,28 @@ const Card = ({ product }) => {
                     flexDirection: 'column',
                     position: 'relative',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
                     borderRadius: '20px',
                     overflow: 'hidden',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                    '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
+                        opacity: 0,
+                        transition: 'opacity 0.3s ease',
+                    },
                     '&:hover': {
-                        transform: 'translateY(-8px)',
-                        boxShadow: '0 12px 40px rgba(0,0,0,0.15)'
+                        transform: 'translateY(-8px) scale(1.02)',
+                        boxShadow: '0 20px 30px rgba(0, 0, 0, 0.15)',
+                        '&::before': {
+                            opacity: 1,
+                        },
+                        '& .card-media': {
+                            transform: 'scale(1.08)',
+                        },
                     }
                 }}
             >
@@ -98,6 +113,7 @@ const Card = ({ product }) => {
                         </Box>
                     )}
                     <CardMedia
+                        className="card-media"
                         component="img"
                         image={product.imageUrl || ''}
                         alt={product.name}
@@ -113,20 +129,40 @@ const Card = ({ product }) => {
                             width: '100%',
                             height: '100%',
                             objectFit: 'cover',
-                            filter: 'brightness(0.9)',
+                            transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                            filter: 'brightness(0.95) contrast(1.1)',
+                        }}
+                    />
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 100%)',
+                            zIndex: 1,
                         }}
                     />
                 </Box>
 
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                <CardContent sx={{ 
+                    flexGrow: 1, 
+                    p: 3,
+                    background: theme => theme.palette.mode === 'dark' 
+                        ? 'linear-gradient(180deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,1) 100%)'
+                        : 'linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,1) 100%)',
+                }}>
                     {/* Restaurant Name */}
                     <Typography 
                         variant="h5" 
                         sx={{ 
                             fontWeight: 700,
-                            color: '#1a1a1a',
+                            color: theme => theme.palette.text.primary,
                             mb: 1,
-                            lineHeight: 1.3
+                            lineHeight: 1.3,
+                            fontSize: '1.25rem',
+                            textShadow: '0 1px 2px rgba(0,0,0,0.1)'
                         }}
                     >
                         {product.name}
@@ -140,10 +176,13 @@ const Card = ({ product }) => {
                                 label={tag}
                                 size="small"
                                 sx={{ 
-                                    backgroundColor: 'rgba(0,0,0,0.08)',
-                                    fontSize: '0.75rem',
-                                    fontWeight: 500,
-                                    color: '#333'
+                                    backgroundColor: theme => theme.palette.mode === 'dark' 
+                                        ? 'rgba(255,255,255,0.1)' 
+                                        : 'rgba(0,0,0,0.08)',
+                                    fontSize: '0.8rem',
+                                    fontWeight: 600,
+                                    color: theme => theme.palette.text.primary,
+                                    padding: '4px 8px'
                                 }}
                             />
                         ))}
@@ -158,20 +197,32 @@ const Card = ({ product }) => {
                                 size="small" 
                                 readOnly 
                             />
-                            <Typography variant="body2" color="text.primary">
+                            <Typography variant="body2" sx={{ 
+                                color: theme => theme.palette.text.primary,
+                                fontWeight: 500,
+                                fontSize: '0.9rem'
+                            }}>
                                 ({product.ratingCount || '100+'})
                             </Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                                 <TimerIcon sx={{ fontSize: 18, color: '#444' }} />
-                                <Typography variant="body2" sx={{ color: '#333' }}>
+                                <Typography variant="body2" sx={{ 
+                                    color: theme => theme.palette.text.primary,
+                                    fontWeight: 500,
+                                    fontSize: '0.9rem'
+                                }}>
                                     {product.deliveryTime || '30-40 min'}
                                 </Typography>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                                 <ShippingIcon sx={{ fontSize: 18, color: '#444' }} />
-                                <Typography variant="body2" sx={{ color: '#333' }}>
+                                <Typography variant="body2" sx={{ 
+                                    color: theme => theme.palette.text.primary,
+                                    fontWeight: 500,
+                                    fontSize: '0.9rem'
+                                }}>
                                     ₹{product.deliveryFee || 'Free'}
                                 </Typography>
                             </Box>
@@ -179,12 +230,37 @@ const Card = ({ product }) => {
                     </Box>
 
                     {/* Average Cost */}
-                    <Typography variant="body2" sx={{ color: '#333', fontWeight: 500 }}>
+                    <Typography variant="body2" sx={{ 
+                        color: theme => theme.palette.text.primary,
+                        fontWeight: 600,
+                        fontSize: '0.9rem'
+                    }}>
                         Average cost for two: ₹{formatPrice(product.price * 2)}
                     </Typography>
+                    {product.isPopular && (
+                        <Chip
+                            icon={<HotIcon sx={{ color: '#fff !important' }} />}
+                            label="Popular"
+                            sx={{
+                                position: 'absolute',
+                                top: 16,
+                                right: 16,
+                                background: 'linear-gradient(45deg, #ff4081, #c51162)',
+                                color: '#fff',
+                                fontWeight: 600,
+                                zIndex: 2,
+                            }}
+                        />
+                    )}
                 </CardContent>
 
-                <CardActions sx={{ p: 3, pt: 0 }}>
+                <CardActions sx={{ 
+                    p: 3, 
+                    pt: 0,
+                    background: theme => theme.palette.mode === 'dark' 
+                        ? 'rgba(18,18,18,1)'
+                        : 'rgba(255,255,255,1)',
+                }}>
                     <Button 
                         fullWidth
                         size="large" 
@@ -194,10 +270,12 @@ const Card = ({ product }) => {
                             borderRadius: 2,
                             fontWeight: 600,
                             background: 'linear-gradient(45deg, #ff7043, #e64a19)',
-                            boxShadow: '0 2px 8px rgba(255, 112, 67, 0.3)',
+                            boxShadow: '0 4px 15px rgba(255, 112, 67, 0.3)',
+                            transition: 'all 0.3s ease',
                             '&:hover': {
                                 background: 'linear-gradient(45deg, #e64a19, #d84315)',
-                                boxShadow: '0 4px 12px rgba(255, 112, 67, 0.4)'
+                                boxShadow: '0 6px 20px rgba(255, 112, 67, 0.4)',
+                                transform: 'translateY(-2px)',
                             }
                         }}
                     >

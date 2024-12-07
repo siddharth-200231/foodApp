@@ -36,6 +36,7 @@ import {
   ShoppingBag as ShoppingBagIcon,
   ShoppingBag,
   Restaurant as RestaurantIcon,
+  Info as InfoIcon,
 } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
@@ -573,6 +574,27 @@ const Navbar = ({ onSearch, onSelectRestaurant }) => {
 
           {/* Add RestaurantMenu here */}
           <RestaurantMenu onSelectRestaurant={onSelectRestaurant} />
+
+          {/* Add About link before the Action Buttons */}
+          <Button
+            component={Link}
+            to="/about"
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              color: '#FC8019',
+              textTransform: 'none',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              ml: 2,
+              '&:hover': {
+                color: '#e67216',
+                backgroundColor: 'rgba(252, 128, 25, 0.1)',
+                transform: 'scale(1.05)',
+              }
+            }}
+          >
+            About
+          </Button>
 
           {/* Action Buttons */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 } }}>

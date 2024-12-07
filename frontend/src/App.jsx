@@ -14,6 +14,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import { SnackbarProvider } from 'notistack';
+import './styles/global.css';
+import About from './components/About';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -69,6 +71,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/update/:id" element={<UpdateProduct />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/about" element={<About />} />
             </Routes>
           </BrowserRouter>
         </SnackbarProvider>
