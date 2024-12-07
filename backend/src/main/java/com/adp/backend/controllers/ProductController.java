@@ -39,7 +39,7 @@ public class ProductController {
         return service.addProduct(product);
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/resturants")
     public List<String> getCategories() {
         return service.getAllCategory();
     }

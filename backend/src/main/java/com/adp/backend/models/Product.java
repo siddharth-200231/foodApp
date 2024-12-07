@@ -25,7 +25,7 @@ public class Product {
     private String desc;
     
     private String name;
-    private String category;
+    private String resturant;
     
     @Column(name = "release_date")
     private Date releaseDate;

@@ -35,6 +35,7 @@ import {
   Home as HomeIcon,
   ShoppingBag as ShoppingBagIcon,
   ShoppingBag,
+  Restaurant as RestaurantIcon,
 } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
@@ -108,28 +109,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const CategoryMenu = ({ onSelectCategory }) => {
+const RestaurantMenu = ({ onSelectRestaurant }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const open = Boolean(anchorEl);
   
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchRestaurants = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('/api/categories');
-        // Add "All" category at the beginning
-        setCategories(['All', ...response.data]);
+        const response = await axios.get('/api/restaurants');
+        setRestaurants(['All Restaurants', ...response.data]);
       } catch (error) {
-        console.error('Error fetching categories:', error);
-        setCategories(['All']); // Fallback to at least showing "All"
+        console.error('Error fetching restaurants:', error);
+        setRestaurants(['All Restaurants']);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCategories();
+    fetchRestaurants();
   }, []);
 
   const handleClick = (event) => {
@@ -140,8 +140,8 @@ const CategoryMenu = ({ onSelectCategory }) => {
     setAnchorEl(null);
   };
 
-  const handleSelect = (category) => {
-    onSelectCategory(category === 'All' ? '' : category);
+  const handleSelect = (restaurant) => {
+    onSelectRestaurant(restaurant === 'All Restaurants' ? '' : restaurant);
     handleClose();
   };
 
@@ -163,7 +163,7 @@ const CategoryMenu = ({ onSelectCategory }) => {
           }
         }}
       >
-        Categories
+        Restaurants
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -190,14 +190,14 @@ const CategoryMenu = ({ onSelectCategory }) => {
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
       >
         {loading ? (
-          <MenuItem disabled>Loading categories...</MenuItem>
+          <MenuItem disabled>Loading restaurants...</MenuItem>
         ) : (
-          categories.map((category) => (
+          restaurants.map((restaurant) => (
             <MenuItem
-              key={category}
-              onClick={() => handleSelect(category)}
+              key={restaurant}
+              onClick={() => handleSelect(restaurant)}
             >
-              {category}
+              {restaurant}
             </MenuItem>
           ))
         )}
@@ -206,9 +206,28 @@ const CategoryMenu = ({ onSelectCategory }) => {
   );
 };
 
-const MobileMenu = ({ onClose, onSelectCategory }) => {
+const MobileMenu = ({ onClose, onSelectRestaurant }) => {
   const navigate = useNavigate();
   const { user, logout } = useContext(AppContext);
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('/api/restaurants');
+        setRestaurants(['All Restaurants', ...response.data]);
+      } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        setRestaurants(['All Restaurants']);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -243,27 +262,33 @@ const MobileMenu = ({ onClose, onSelectCategory }) => {
 
         <Divider sx={{ my: 1 }} />
 
-        {/* Categories Section */}
+        {/* Restaurants Section */}
         <ListItem>
           <ListItemIcon>
-            <CategoryIcon />
+            <RestaurantIcon />
           </ListItemIcon>
-          <ListItemText primary="Categories" />
+          <ListItemText primary="Restaurants" />
         </ListItem>
         
-        {["All", "Electronics", "Fashion", "Home & Living", "Books", "Sports", "Beauty", "Toys"].map((category) => (
-          <ListItem 
-            button 
-            key={category}
-            onClick={() => {
-              onSelectCategory(category);
-              onClose();
-            }}
-            sx={{ pl: 4 }}
-          >
-            <ListItemText primary={category} />
+        {loading ? (
+          <ListItem sx={{ pl: 4 }}>
+            <ListItemText primary="Loading restaurants..." />
           </ListItem>
-        ))}
+        ) : (
+          restaurants.map((restaurant) => (
+            <ListItem 
+              button 
+              key={restaurant}
+              onClick={() => {
+                onSelectRestaurant(restaurant === "All Restaurants" ? "" : restaurant);
+                onClose();
+              }}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary={restaurant} />
+            </ListItem>
+          ))
+        )}
 
         <Divider sx={{ my: 1 }} />
 
@@ -345,31 +370,31 @@ const UserMenu = ({ anchorEl, handleClose, user, handleLogout }) => (
   </Menu>
 );
 
-const Navbar = ({ onSearch, onSelectCategory }) => {
+const Navbar = ({ onSearch, onSelectRestaurant }) => {
   const { user, cart, logout } = useContext(AppContext);
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [categories, setCategories] = useState(['All Categories']);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [restaurants, setRestaurants] = useState(['All Restaurants']);
+  const [selectedRestaurant, setSelectedRestaurant] = useState('');
   const [loading, setLoading] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchRestaurants = async () => {
       try {
-        const response = await axios.get('/api/categories');
-        setCategories(['All Categories', ...response.data]);
+        const response = await axios.get('/api/resturants');
+        setRestaurants(['All Restaurants', ...response.data]);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching restaurants:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCategories();
+    fetchRestaurants();
   }, []);
 
   const handleOpenNavMenu = (event) => {
@@ -394,9 +419,9 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
     onSearch(query);
   };
 
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    onSelectCategory(category === 'All Categories' ? '' : category);
+  const handleRestaurantSelect = (restaurant) => {
+    setSelectedRestaurant(restaurant);
+    onSelectRestaurant(restaurant === 'All Restaurants' ? '' : restaurant);
     setDrawerOpen(false);
   };
 
@@ -511,8 +536,8 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
             </Search>
           </Box>
 
-          {/* Add CategoryMenu here */}
-          <CategoryMenu onSelectCategory={onSelectCategory} />
+          {/* Add RestaurantMenu here */}
+          <RestaurantMenu onSelectRestaurant={onSelectRestaurant} />
 
           {/* Action Buttons */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 } }}>
@@ -602,7 +627,7 @@ const Navbar = ({ onSearch, onSelectCategory }) => {
           }
         }}
       >
-        <MobileMenu onClose={() => setMobileOpen(false)} onSelectCategory={onSelectCategory} />
+        <MobileMenu onClose={() => setMobileOpen(false)} onSelectRestaurant={onSelectRestaurant} />
       </Drawer>
     </AppBar>
   );

@@ -5,7 +5,7 @@ import unplugged from "../assets/unplugged.png";
 import "./Home.css";
 import { Grid, Container, Box, Typography, CircularProgress } from '@mui/material';
 
-const Home = ({ selectedCategory, searchQuery }) => {
+const Home = ({ selectedRestaurant, searchQuery }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,15 +33,16 @@ const Home = ({ selectedCategory, searchQuery }) => {
     fetchProducts();
   }, []);
 
-  // Filter products based on category and search query
+  // Filter products based on restaurant and search query
   const filteredProducts = products.filter((product) => {
     const matchesSearch = !searchQuery || 
       (product.name && product.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()));
     
-    const matchesCategory = !selectedCategory || product.category === selectedCategory;
+    const matchesRestaurant = !selectedRestaurant || 
+      (product.restaurant && product.restaurant.toLowerCase() === selectedRestaurant.toLowerCase());
   
-    return matchesSearch && matchesCategory;
+    return matchesSearch && matchesRestaurant;
   });
 
   if (loading) {
@@ -93,33 +94,18 @@ const Home = ({ selectedCategory, searchQuery }) => {
     <Container 
       maxWidth="xl" 
       sx={{ 
-        py: { xs: 3, sm: 5 },
-        px: { xs: 2, sm: 4 },
+        py: { xs: 2, sm: 4 },
         bgcolor: 'background.default',
         minHeight: '100vh'
       }}
     >
-      {selectedCategory && selectedCategory !== 'All Categories' && (
-        <Box 
-          sx={{ 
-            mb: { xs: 3, sm: 5 },
-            textAlign: 'center',
-            p: 3,
-            borderRadius: '20px',
-            background: (theme) => theme.palette.background.paper,
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)'
-          }}
-        >
-          <Typography 
-            variant="h4" 
-            sx={{ 
-              fontSize: { xs: '1.8rem', sm: '2.2rem' },
-              fontWeight: 700,
-              color: '#ff4757',
-              mb: 1
-            }}
-          >
-            {selectedCategory}
+      {selectedRestaurant && selectedRestaurant !== 'All Restaurants' && (
+        <Box sx={{ mb: { xs: 2, sm: 4 } }}>
+          <Typography variant="h4" sx={{ 
+            fontSize: { xs: '1.5rem', sm: '2rem' },
+            fontWeight: 700 
+          }}>
+            {selectedRestaurant}
           </Typography>
           <Typography variant="body1" color="text.secondary">
             {filteredProducts.length} delicious items found
